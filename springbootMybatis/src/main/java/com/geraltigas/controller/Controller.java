@@ -3,6 +3,7 @@ package com.geraltigas.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.geraltigas.pojo.Scinews;
+import com.geraltigas.service.CrossSelectByIdService;
 import com.geraltigas.service.ScinewsService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class Controller {
 
     private final ScinewsService scinewsService;
+    private final CrossSelectByIdService crossSelectByIdService;
 
-    public Controller(ScinewsService scinewsService){
+    public Controller(ScinewsService scinewsService,CrossSelectByIdService crossSelectByIdService){
         this.scinewsService = scinewsService;
+        this.crossSelectByIdService = crossSelectByIdService;
     }
 
     @RequestMapping("/getall")
@@ -49,6 +52,11 @@ public class Controller {
     @DeleteMapping("/deletescinewsbytitle/{title}")
     public String deleteScinewsByTitle(@PathVariable String title){
         return "" + scinewsService.deleteScinewsByTitle(title);
+    }
+
+    @GetMapping("/crossfindbyid/{user_id}")
+    public String crossfindbyid(@PathVariable String user_id){
+        return JSON.toJSONString(crossSelectByIdService.ClossSelectById(user_id));
     }
 
 }
